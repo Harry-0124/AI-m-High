@@ -1,0 +1,31 @@
+# Virtual environments
+venv/
+venv311/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment variables
+.env
+
+# IDE and editor settings
+.vscode/
+.idea/
+
+# Temporary or backup files
+*.zip
+*.log
+*.txt
+*.json
+*.csv
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+dist/
+build/
