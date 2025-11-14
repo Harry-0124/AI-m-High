@@ -10,6 +10,8 @@ import json
 import time
 import re
 from datetime import datetime
+import pymongo
+
 
 class AppleWatchPriceScraper:
     def __init__(self, headless=True):
@@ -770,6 +772,26 @@ class AppleWatchPriceScraper:
         except Exception as e:
             print(f"❌ Failed to save results: {e}")
     
+     # 👇 ADD THIS FUNCTION JUST BELOW save_results()
+    def save_to_mongodb(self):
+        """Save scraped data (website, price, rating, reviews, link, timestamp) to MongoDB"""
+        import pymongo
+        from app.config import settings
+
+        try:
+            client = pymongo.MongoClient(settings.MONGODB_URI)
+            db = client[settings.DB_NAME]
+            collection = db["scraped_data"]
+
+            if self.results:
+                collection.insert_many(self.results)
+                print(f"✅ {len(self.results)} records stored in MongoDB collection 'scraped_data'")
+            else:
+                print("⚠️ No scraped data to store.")
+            client.close()
+        except Exception as e:
+            print(f"❌ Failed to store scraped data: {e}")
+    
     def run_scraper(self):
         """Main method to run the complete scraping process"""
         print("🚀 Starting Apple Watch Price Scraper...")
@@ -807,6 +829,7 @@ class AppleWatchPriceScraper:
             
             # Save results to both JSON and text files
             self.save_results()
+            self.save_to_mongodb()
             
             return self.results
             

@@ -27,13 +27,14 @@ app.add_middleware(
 
 # ---------- Include Routers ----------
 # ✅ Fixed all duplicate prefix issues
-app.include_router(ml.router, prefix="/api/ml", tags=["ML"])
-app.include_router(llm.router, prefix="/api/llm", tags=["LLM"])
-app.include_router(products.router, prefix="/api/products", tags=["Products"])
-app.include_router(auth.router)  # router already has /api/auth prefix
-app.include_router(admin_products.router)  # router already has /api/admin prefix
-app.include_router(alerts.router)  # router already has prefix /api/alerts
-app.include_router(static_scraper.router, prefix="/api/static", tags=["Static Scraper"])
+# ---------- Include Routers ----------
+app.include_router(ml.router, prefix="/ml", tags=["ML"])
+app.include_router(llm.router, prefix="/llm", tags=["LLM"])
+app.include_router(products.router, prefix="/products", tags=["Products"])
+app.include_router(auth.router, prefix="/auth", tags=["Auth"])
+app.include_router(admin_products.router, prefix="/admin", tags=["Admin"])
+app.include_router(alerts.router, prefix="/alerts", tags=["Alerts"])
+app.include_router(static_scraper.router, prefix="/static_scraper", tags=["Scraper"])
 
 # ---------- Startup & Shutdown Events ----------
 @app.on_event("startup")
